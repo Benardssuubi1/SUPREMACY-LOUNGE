@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -371,7 +372,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 // can change it from the Settings tab
 // ════════════════════════════════════════
 const DEFAULT_API = 'https://climax-api-production.up.railway.app';
-const API_KEY = 'supremacy-secret-2025';
+const API_KEY = 'climax-secret-2025';
 
 function getApiUrl(){
   return localStorage.getItem('supremacy_api_url') || DEFAULT_API;
@@ -437,7 +438,10 @@ async function fetchOrders(){
     const res = await fetch(url + '/api/orders', {
       headers: { 'X-API-Key': API_KEY }
     });
-    if(!res.ok) throw new Error('HTTP ' + res.status);
+    if(!res.ok){
+      const body = await res.text();
+      throw new Error('HTTP ' + res.status + ' — ' + body.substring(0,100));
+    }
     const data = await res.json();
     orders = data;
     setConn(true);
@@ -460,8 +464,9 @@ async function fetchOrders(){
           <div class="empty-text" style="color:var(--pink)">
             Cannot reach API server.<br>
             <span style="color:var(--muted);font-size:.75rem">
-              Make sure <code style="color:var(--cyan)">python app.py</code> is running.<br>
-              Current URL: ${url}
+              Error: ${e.message}<br>
+              URL: ${url}<br>
+              Key: ${API_KEY.substring(0,8)}...
             </span>
           </div>
         </div>`;
