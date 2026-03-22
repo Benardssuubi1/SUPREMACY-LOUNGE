@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/",      "destination": "/climax-index.html" },
-    { "source": "/admin", "destination": "/climax-admin.html" }
+    { "source": "/",      "destination": "/supremacy-index.html" },
+    { "source": "/admin", "destination": "/supremacy-admin.html" }
   ]
 }
